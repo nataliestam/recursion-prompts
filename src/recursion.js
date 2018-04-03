@@ -24,28 +24,38 @@ var sum = function(array) {
   } else if (array.length > 1) {
     return array[array.length-1] + sum(array.slice(0, array.length-1));
   }
+
+  //base case
   return array[0];
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
-  console.log(array);
   if (array.length === 0) {
     return 0;
   } else if (array.length > 1) {
-    return array[array.length-1] + arraySum(array.slice(0, array.length-1)); 
+    var lastElem = array[array.length-1];
+    if (Array.isArray(lastElem)) {
+      return arraySum(lastElem) + arraySum(array.slice(0, array.length-1));
+    }
+    return lastElem + arraySum(array.slice(0, array.length-1)); 
+  }
+
+  //base case
+  if (Array.isArray(array[0])) {
+    return arraySum(array[0]);
   }
   return array[0];
 };
-
-//console.log(arraySum([[1],[[2]],3,4]));
 
 // 4. Check if a number is even.
 var isEven = function(n) {
   if ((n < -2 || n > 2 || n === 0)) {
     return isEven(Math.abs(n) - 2);
   }
+
+  //base case
   return Math.abs(n) === 2;
 };
 
